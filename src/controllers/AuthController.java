@@ -47,6 +47,7 @@ public class AuthController {
             if (rs.next()) {
                 loginMessage.setText("Login successful");
 
+                int userId = rs.getInt("id"); // ধরছি ইউজার টেবিলে id আছে
                 String fullname = rs.getString("fullname");
                 String email = rs.getString("email");
                 String phone = rs.getString("phone");
@@ -55,7 +56,7 @@ public class AuthController {
                 Parent root = loader.load();
 
                 DashboardController controller = loader.getController();
-                controller.setUserData(username, fullname, email, phone);
+                controller.setUserData(userId, username, fullname, email, phone);
 
                 Stage stage = (Stage) loginUsernameField.getScene().getWindow();
                 stage.setScene(new Scene(root));

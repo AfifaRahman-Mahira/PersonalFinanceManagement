@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controllers.AddTransactionController"
+      spacing="10">
+
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
+
+    <HBox spacing="10">
+        <Label text="Type:"/>
+        <RadioButton fx:id="rbIncome" text="Income"/>
+        <RadioButton fx:id="rbExpense" text="Expense"/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Category:"/>
+        <ComboBox fx:id="comboCategory" prefWidth="150"/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Amount:"/>
+        <TextField fx:id="txtAmount" promptText="Enter amount"/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Date:"/>
+        <DatePicker fx:id="datePicker"/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Note:"/>
+        <TextArea fx:id="txtNote" prefRowCount="3" prefColumnCount="20"/>
+    </HBox>
+
+    <Button fx:id="btnSubmit" text="Submit" onAction="#handleSubmit"/>
+
+</VBox>
