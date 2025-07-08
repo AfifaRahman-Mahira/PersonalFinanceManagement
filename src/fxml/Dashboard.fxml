@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controllers.DashboardController"
+      alignment="CENTER" spacing="10" style="-fx-padding: 20;">
+
+    <Label fx:id="welcomeLabel" style="-fx-font-size: 24px;" />
+    <Label fx:id="fullnameLabel" />
+    <Label fx:id="emailLabel" />
+    <Label fx:id="phoneLabel" />
+
+</VBox>
