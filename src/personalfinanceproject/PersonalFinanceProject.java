@@ -10,7 +10,9 @@ public class PersonalFinanceProject extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
+        // Corrected relative path
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml")); // <-- Default Login Page
+
         primaryStage.setTitle("Personal Finance Management System");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

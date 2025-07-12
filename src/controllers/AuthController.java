@@ -32,13 +32,15 @@ public class AuthController {
         }
 
         try (Connection conn = DBConnector.getConnection()) {
-            String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+            String sql = "SELECT id FROM users WHERE username = ? AND password = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             stmt.setString(2, password);
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
+                int userId = rs.getInt("id");
+
                 messageLabel.setText("Login successful!");
                 messageLabel.setStyle("-fx-text-fill: green;");
 
@@ -46,7 +48,7 @@ public class AuthController {
                 Parent root = loader.load();
 
                 DashboardController dashboardController = loader.getController();
-                dashboardController.setUsername(username);
+                dashboardController.setUser(userId, username);  // এখানে userId পাঠানো হচ্ছে
 
                 Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));

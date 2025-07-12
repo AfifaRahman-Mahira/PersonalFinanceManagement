@@ -3,26 +3,38 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.DashboardController" spacing="15" style="-fx-background-color: #ffffff;">
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controllers.DashboardController"
+      spacing="20" alignment="TOP_CENTER" style="-fx-background-color: #f9f9f9;" prefWidth="800" prefHeight="600">
 
     <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
+        <Insets top="20" right="30" bottom="20" left="30"/>
     </padding>
 
-    <Label fx:id="welcomeLabel" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #0078D7;" />
+    <Label fx:id="welcomeLabel" text="Welcome!" style="-fx-font-size: 24px; -fx-text-fill: #0078D7; -fx-font-weight: bold;" />
 
-    <TableView fx:id="transactionTable" prefHeight="400" prefWidth="700" style="-fx-border-color: #d1d1d1; -fx-border-radius: 5;">
+    <TableView fx:id="transactionTable" prefHeight="400" prefWidth="740">
         <columns>
-            <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="300" />
-            <TableColumn fx:id="categoryColumn" text="Category" prefWidth="150" />
-            <TableColumn fx:id="amountColumn" text="Amount" prefWidth="100" />
+            <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="300"/>
+            <TableColumn fx:id="categoryColumn" text="Category" prefWidth="200"/>
+            <TableColumn fx:id="amountColumn" text="Amount" prefWidth="200"/>
         </columns>
     </TableView>
 
-    <HBox spacing="10" alignment="CENTER_RIGHT">
-        <Button text="Add Transaction" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold;" onAction="#openAddTransaction"/>
-        <Button text="Logout" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold;" onAction="#handleLogout"/>
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <Button text="Add Transaction"
+                style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold;"
+                onAction="#openAddTransaction"/>
+                
+        <Button text="Go to Budget"
+                style="-fx-background-color: #17a2b8; -fx-text-fill: white; -fx-font-weight: bold;"
+                onAction="#openBudgetPage"/>
+
+        <Button text="Logout"
+                style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold;"
+                onAction="#handleLogout"/>
     </HBox>
 
 </VBox>

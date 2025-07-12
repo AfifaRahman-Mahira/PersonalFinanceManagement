@@ -21,10 +21,12 @@ public class DashboardController {
     @FXML private TableColumn<Transaction, Double> amountColumn;
     @FXML private Label welcomeLabel;
 
-    private String currentUsername;
+    private int userId;
+    private String username;
 
-    public void setUsername(String username) {
-        this.currentUsername = username;
+    public void setUser(int userId, String username) {
+        this.userId = userId;
+        this.username = username;
         welcomeLabel.setText("Welcome, " + username);
         initializeTableColumns();
         loadTransactions();
@@ -42,7 +44,7 @@ public class DashboardController {
         try (Connection conn = DBConnector.getConnection()) {
             String sql = "SELECT description, category, amount FROM transactions WHERE username = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, currentUsername);
+            stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -67,7 +69,7 @@ public class DashboardController {
             Parent root = loader.load();
 
             AddTransactionController controller = loader.getController();
-            controller.setUsername(currentUsername);
+            controller.setUsername(username);
 
             Stage stage = new Stage();
             stage.setTitle("Add Transaction");
@@ -75,6 +77,24 @@ public class DashboardController {
             stage.showAndWait();
 
             loadTransactions();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void openBudgetPage() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/budget.fxml"));
+            Parent root = loader.load();
+
+            BudgetController controller = loader.getController();
+            controller.setUserId(userId);  // userId পাঠানো হচ্ছে এখানে
+
+            Stage stage = new Stage();
+            stage.setTitle("Budget Management");
+            stage.setScene(new Scene(root));
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
