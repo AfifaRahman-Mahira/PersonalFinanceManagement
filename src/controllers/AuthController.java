@@ -1,135 +1,124 @@
 package controllers;
 
 import database.DBConnector;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.IOException;
+import java.sql.*;
 
 public class AuthController {
 
-    @FXML private TextField loginUsernameField;
-    @FXML private PasswordField loginPasswordField;
-    @FXML private Label loginMessage;
-
-    @FXML private TextField signupUsernameField;
-    @FXML private PasswordField signupPasswordField;
-    @FXML private TextField signupFullnameField;
-    @FXML private TextField signupEmailField;
-    @FXML private TextField signupPhoneField;
-    @FXML private Label signupMessage;
+    @FXML private TextField usernameField;
+    @FXML private PasswordField passwordField;
+    @FXML private TextField fullnameField;
+    @FXML private TextField emailField;
+    @FXML private Label messageLabel;
 
     @FXML
     private void handleLogin(ActionEvent event) {
-        String username = loginUsernameField.getText();
-        String password = loginPasswordField.getText();
+        String username = usernameField.getText().trim();
+        String password = passwordField.getText().trim();
 
-        if(username.isEmpty() || password.isEmpty()) {
-            loginMessage.setText("Please enter username and password");
+        if (username.isEmpty() || password.isEmpty()) {
+            messageLabel.setText("Please enter username and password");
+            messageLabel.setStyle("-fx-text-fill: red;");
             return;
         }
 
         try (Connection conn = DBConnector.getConnection()) {
             String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, username);
-            pst.setString(2, password);
-            ResultSet rs = pst.executeQuery();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            stmt.setString(2, password);
 
+            ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                loginMessage.setText("Login successful");
+                messageLabel.setText("Login successful!");
+                messageLabel.setStyle("-fx-text-fill: green;");
 
-                int userId = rs.getInt("id"); // ধরছি ইউজার টেবিলে id আছে
-                String fullname = rs.getString("fullname");
-                String email = rs.getString("email");
-                String phone = rs.getString("phone");
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/dashboard.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Dashboard.fxml"));
                 Parent root = loader.load();
 
-                DashboardController controller = loader.getController();
-                controller.setUserData(userId, username, fullname, email, phone);
+                DashboardController dashboardController = loader.getController();
+                dashboardController.setUsername(username);
 
-                Stage stage = (Stage) loginUsernameField.getScene().getWindow();
+                Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
-                stage.show();
-
+                stage.setTitle("Dashboard");
             } else {
-                loginMessage.setText("Invalid username or password");
+                messageLabel.setText("Invalid username or password");
+                messageLabel.setStyle("-fx-text-fill: red;");
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
-            loginMessage.setText("Database error");
-        } catch (Exception e) {
-            e.printStackTrace();
+            messageLabel.setText("Login failed due to error");
+            messageLabel.setStyle("-fx-text-fill: red;");
         }
+    }
+
+    @FXML
+    private void openSignup(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/signup.fxml"));
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Sign Up");
     }
 
     @FXML
     private void handleSignup(ActionEvent event) {
-        String username = signupUsernameField.getText();
-        String password = signupPasswordField.getText();
-        String fullname = signupFullnameField.getText();
-        String email = signupEmailField.getText();
-        String phone = signupPhoneField.getText();
+        String username = usernameField.getText().trim();
+        String password = passwordField.getText().trim();
+        String fullname = fullnameField.getText().trim();
+        String email = emailField.getText().trim();
 
-        if(username.isEmpty() || password.isEmpty()) {
-            signupMessage.setText("Username and password are required");
+        if (username.isEmpty() || password.isEmpty() || fullname.isEmpty() || email.isEmpty()) {
+            messageLabel.setText("Please fill all fields");
+            messageLabel.setStyle("-fx-text-fill: red;");
             return;
         }
 
         try (Connection conn = DBConnector.getConnection()) {
-            String sql = "INSERT INTO users (username, password, fullname, email, phone) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, username);
-            pst.setString(2, password);
-            pst.setString(3, fullname);
-            pst.setString(4, email);
-            pst.setString(5, phone);
+            String checkSql = "SELECT * FROM users WHERE username = ?";
+            PreparedStatement checkStmt = conn.prepareStatement(checkSql);
+            checkStmt.setString(1, username);
+            ResultSet rs = checkStmt.executeQuery();
 
-            int rows = pst.executeUpdate();
-            if(rows > 0) {
-                signupMessage.setText("Signup successful. Please login.");
-            } else {
-                signupMessage.setText("Signup failed");
+            if (rs.next()) {
+                messageLabel.setText("Username already exists");
+                messageLabel.setStyle("-fx-text-fill: red;");
+                return;
             }
 
+            String insertSql = "INSERT INTO users (username, password, fullname, email) VALUES (?, ?, ?, ?)";
+            PreparedStatement insertStmt = conn.prepareStatement(insertSql);
+            insertStmt.setString(1, username);
+            insertStmt.setString(2, password);
+            insertStmt.setString(3, fullname);
+            insertStmt.setString(4, email);
+
+            insertStmt.executeUpdate();
+
+            messageLabel.setText("Signup successful! Please login.");
+            messageLabel.setStyle("-fx-text-fill: green;");
         } catch (SQLException e) {
             e.printStackTrace();
-            signupMessage.setText("Database error or username already exists");
+            messageLabel.setText("Signup failed due to error");
+            messageLabel.setStyle("-fx-text-fill: red;");
         }
     }
 
     @FXML
-    private void goToSignup(ActionEvent event) {
-        try {
-            Stage stage = (Stage) loginUsernameField.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/signup.fxml"));
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void goToLogin(ActionEvent event) {
-        try {
-            Stage stage = (Stage) signupUsernameField.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+    private void openLogin(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Login");
     }
 }

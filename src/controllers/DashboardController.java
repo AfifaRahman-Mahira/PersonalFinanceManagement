@@ -4,93 +4,90 @@ import database.DBConnector;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.io.IOException;
+import java.sql.*;
 
 public class DashboardController {
 
-    @FXML private Label welcomeLabel;
-    @FXML private Label fullnameLabel;
-    @FXML private Label emailLabel;
-    @FXML private Label phoneLabel;
-    @FXML private Button btnAddTransaction;
-
     @FXML private TableView<Transaction> transactionTable;
-    @FXML private TableColumn<Transaction, String> colType;
-    @FXML private TableColumn<Transaction, String> colCategory;
-    @FXML private TableColumn<Transaction, Double> colAmount;
-    @FXML private TableColumn<Transaction, String> colDate;
-    @FXML private TableColumn<Transaction, String> colNote;
+    @FXML private TableColumn<Transaction, String> descriptionColumn;
+    @FXML private TableColumn<Transaction, String> categoryColumn;
+    @FXML private TableColumn<Transaction, Double> amountColumn;
+    @FXML private Label welcomeLabel;
 
-    private int currentUserId;
+    private String currentUsername;
 
-    public void setUserData(int userId, String username, String fullname, String email, String phone) {
-        this.currentUserId = userId;
-        welcomeLabel.setText("Welcome, " + username + "!");
-        fullnameLabel.setText("Full Name: " + fullname);
-        emailLabel.setText("Email: " + email);
-        phoneLabel.setText("Phone: " + phone);
-
+    public void setUsername(String username) {
+        this.currentUsername = username;
+        welcomeLabel.setText("Welcome, " + username);
+        initializeTableColumns();
         loadTransactions();
     }
 
-    @FXML
-    public void initialize() {
-        colType.setCellValueFactory(new PropertyValueFactory<>("type"));
-        colCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
-        colAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
-        colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
-        colNote.setCellValueFactory(new PropertyValueFactory<>("note"));
+    private void initializeTableColumns() {
+        descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
+        categoryColumn.setCellValueFactory(cellData -> cellData.getValue().categoryProperty());
+        amountColumn.setCellValueFactory(cellData -> cellData.getValue().amountProperty().asObject());
     }
 
-    private void loadTransactions() {
+    public void loadTransactions() {
         ObservableList<Transaction> transactions = FXCollections.observableArrayList();
 
-        try {
-            Connection conn = DBConnector.getConnection();
-            String sql = "SELECT type, category, amount, date, note FROM transactions WHERE user_id = ?";
+        try (Connection conn = DBConnector.getConnection()) {
+            String sql = "SELECT description, category, amount FROM transactions WHERE username = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, currentUserId);
+            stmt.setString(1, currentUsername);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 transactions.add(new Transaction(
-                        rs.getString("type"),
+                        rs.getString("description"),
                         rs.getString("category"),
-                        rs.getDouble("amount"),
-                        rs.getDate("date").toString(),
-                        rs.getString("note")
+                        rs.getDouble("amount")
                 ));
             }
 
             transactionTable.setItems(transactions);
-        } catch (Exception e) {
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    private void handleAddTransaction() {
+    private void openAddTransaction() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/add_transaction.fxml"));
             Parent root = loader.load();
 
             AddTransactionController controller = loader.getController();
-            controller.setCurrentUserId(currentUserId);
+            controller.setUsername(currentUsername);
 
             Stage stage = new Stage();
             stage.setTitle("Add Transaction");
             stage.setScene(new Scene(root));
-            stage.show();
-        } catch (Exception e) {
+            stage.showAndWait();
+
+            loadTransactions();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleLogout() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
+            Stage stage = (Stage) welcomeLabel.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Login");
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

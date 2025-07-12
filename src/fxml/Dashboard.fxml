@@ -4,29 +4,25 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="controllers.DashboardController"
-      spacing="10" alignment="CENTER">
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.DashboardController" spacing="15" style="-fx-background-color: #ffffff;">
 
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <Label fx:id="welcomeLabel" style="-fx-font-size: 24px;"/>
-    <Label fx:id="fullnameLabel"/>
-    <Label fx:id="emailLabel"/>
-    <Label fx:id="phoneLabel"/>
+    <Label fx:id="welcomeLabel" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #0078D7;" />
 
-    <Button fx:id="btnAddTransaction" text="Add Transaction" onAction="#handleAddTransaction"/>
-
-    <TableView fx:id="transactionTable" prefHeight="300" prefWidth="600">
+    <TableView fx:id="transactionTable" prefHeight="400" prefWidth="700" style="-fx-border-color: #d1d1d1; -fx-border-radius: 5;">
         <columns>
-            <TableColumn fx:id="colType" text="Type" prefWidth="100"/>
-            <TableColumn fx:id="colCategory" text="Category" prefWidth="150"/>
-            <TableColumn fx:id="colAmount" text="Amount" prefWidth="100"/>
-            <TableColumn fx:id="colDate" text="Date" prefWidth="150"/>
-            <TableColumn fx:id="colNote" text="Note" prefWidth="200"/>
+            <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="300" />
+            <TableColumn fx:id="categoryColumn" text="Category" prefWidth="150" />
+            <TableColumn fx:id="amountColumn" text="Amount" prefWidth="100" />
         </columns>
     </TableView>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Add Transaction" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold;" onAction="#openAddTransaction"/>
+        <Button text="Logout" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold;" onAction="#handleLogout"/>
+    </HBox>
 
 </VBox>

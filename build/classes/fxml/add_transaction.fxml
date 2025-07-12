@@ -4,41 +4,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
+<VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="controllers.AddTransactionController"
-      spacing="10">
+      spacing="15" alignment="CENTER"
+      style="-fx-padding: 20; -fx-background-color: #fefefe;">
 
-    <padding>
-        <Insets top="15" right="15" bottom="15" left="15"/>
-    </padding>
+    <Label text="Add New Transaction" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
 
-    <HBox spacing="10">
-        <Label text="Type:"/>
-        <RadioButton fx:id="rbIncome" text="Income"/>
-        <RadioButton fx:id="rbExpense" text="Expense"/>
+    <TextField fx:id="descriptionField" promptText="Description" prefWidth="300"/>
+    <ComboBox fx:id="categoryComboBox" prefWidth="300" promptText="Select Category"/>
+    <TextField fx:id="amountField" promptText="Amount" prefWidth="300"/>
+
+    <Label fx:id="messageLabel" text="" />
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Save" onAction="#handleAddTransaction" style="-fx-background-color: #0078d7; -fx-text-fill: white;"/>
+        <Button text="Cancel" onAction="#handleClose" />
     </HBox>
-
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <Label text="Category:"/>
-        <ComboBox fx:id="comboCategory" prefWidth="150"/>
-    </HBox>
-
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <Label text="Amount:"/>
-        <TextField fx:id="txtAmount" promptText="Enter amount"/>
-    </HBox>
-
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <Label text="Date:"/>
-        <DatePicker fx:id="datePicker"/>
-    </HBox>
-
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <Label text="Note:"/>
-        <TextArea fx:id="txtNote" prefRowCount="3" prefColumnCount="20"/>
-    </HBox>
-
-    <Button fx:id="btnSubmit" text="Submit" onAction="#handleSubmit"/>
-
 </VBox>

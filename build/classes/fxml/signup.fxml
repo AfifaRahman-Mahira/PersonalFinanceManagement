@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="controllers.AuthController">
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controllers.AuthController"
+      spacing="10" alignment="CENTER" style="-fx-padding: 20; -fx-background-color: #f5f5f5;">
 
-    <Label text="Signup" style="-fx-font-size: 24px;"/>
+    <Label text="Sign Up" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+    <TextField fx:id="fullnameField" promptText="Full Name" prefWidth="300"/>
+    <TextField fx:id="emailField" promptText="Email" prefWidth="300"/>
+    <TextField fx:id="usernameField" promptText="Username" prefWidth="300"/>
+    <PasswordField fx:id="passwordField" promptText="Password" prefWidth="300"/>
 
-    <TextField fx:id="signupUsernameField" promptText="Username"/>
-    <PasswordField fx:id="signupPasswordField" promptText="Password"/>
-    <TextField fx:id="signupFullnameField" promptText="Full Name"/>
-    <TextField fx:id="signupEmailField" promptText="Email"/>
-    <TextField fx:id="signupPhoneField" promptText="Phone Number"/>
+    <Label fx:id="messageLabel" text="" />
 
-    <Button text="Signup" onAction="#handleSignup"/>
-
-    <Label text="Already have an account?"/>
-    <Button text="Go to Login" onAction="#goToLogin"/>
-    
-    <Label fx:id="signupMessage" style="-fx-text-fill: red;"/>
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Sign Up" onAction="#handleSignup" style="-fx-background-color: #28a745; -fx-text-fill: white;"/>
+        <Button text="Back to Login" onAction="#openLogin" />
+    </HBox>
 </VBox>

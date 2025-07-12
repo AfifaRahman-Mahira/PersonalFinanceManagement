@@ -1,24 +1,27 @@
 package controllers;
 
+import javafx.beans.property.*;
+
 public class Transaction {
+    private final StringProperty description;
+    private final StringProperty category;
+    private final DoubleProperty amount;
 
-    private String type;
-    private String category;
-    private double amount;
-    private String date;
-    private String note;
-
-    public Transaction(String type, String category, double amount, String date, String note) {
-        this.type = type;
-        this.category = category;
-        this.amount = amount;
-        this.date = date;
-        this.note = note;
+    public Transaction(String description, String category, double amount) {
+        this.description = new SimpleStringProperty(description);
+        this.category = new SimpleStringProperty(category);
+        this.amount = new SimpleDoubleProperty(amount);
     }
 
-    public String getType() { return type; }
-    public String getCategory() { return category; }
-    public double getAmount() { return amount; }
-    public String getDate() { return date; }
-    public String getNote() { return note; }
+    public String getDescription() { return description.get(); }
+    public void setDescription(String desc) { description.set(desc); }
+    public StringProperty descriptionProperty() { return description; }
+
+    public String getCategory() { return category.get(); }
+    public void setCategory(String cat) { category.set(cat); }
+    public StringProperty categoryProperty() { return category; }
+
+    public double getAmount() { return amount.get(); }
+    public void setAmount(double amt) { amount.set(amt); }
+    public DoubleProperty amountProperty() { return amount; }
 }
