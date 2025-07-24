@@ -6,16 +6,32 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.net.URL;
+import static javafx.application.Application.launch;
+
 public class PersonalFinanceProject extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        // Corrected relative path
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml")); // <-- Default Login Page
+    public void start(Stage stage) {
+        try {
+            // FXML ফাইলের সঠিক path
+            URL fxmlLocation = getClass().getResource("/fxml/login.fxml");
+            
+            if (fxmlLocation == null) {
+                System.err.println("❌ FXML file not found at /resource/fxml/login.fxml");
+                return;
+            }
 
-        primaryStage.setTitle("Personal Finance Management System");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
+            Parent root = FXMLLoader.load(fxmlLocation);
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Personal Finance Project");
+            stage.show();
+
+        } catch (Exception e) {
+            System.err.println("🚨 Error loading the login.fxml file:");
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {

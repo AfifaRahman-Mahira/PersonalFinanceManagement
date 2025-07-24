@@ -1,21 +1,39 @@
-package personalfinanceproject;
+package controllers;
 
-import javafx.beans.property.*;
+import java.math.BigDecimal;
 
 public class Budget {
-    private final StringProperty category;
-    private final DoubleProperty limit;
+    private int id;
+    private int userId;
+    private String category;
+    private BigDecimal monthlyLimit;
 
-    public Budget(String category, double limit) {
-        this.category = new SimpleStringProperty(category);
-        this.limit = new SimpleDoubleProperty(limit);
+    // Getters and setters
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public StringProperty categoryProperty() {
+    public int getUserId() {
+        return userId;
+    }
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getCategory() {
         return category;
     }
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
-    public DoubleProperty limitProperty() {
-        return limit;
+    public BigDecimal getMonthlyLimit() {
+        return monthlyLimit;
+    }
+    public void setMonthlyLimit(BigDecimal monthlyLimit) {
+        this.monthlyLimit = monthlyLimit;
     }
 }

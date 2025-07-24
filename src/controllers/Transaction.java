@@ -1,27 +1,52 @@
 package controllers;
 
-import javafx.beans.property.*;
+import java.time.LocalDate;
 
 public class Transaction {
-    private final StringProperty description;
-    private final StringProperty category;
-    private final DoubleProperty amount;
+    private int id;
+    private String title;  // এখানে 'title' রাখা হয়েছে (আগে ছিল description)
+    private String category;
+    private double amount;
+    private String type;  // Expense or Income
+    private LocalDate date;
+    private String note;
+    private int userId;
 
-    public Transaction(String description, String category, double amount) {
-        this.description = new SimpleStringProperty(description);
-        this.category = new SimpleStringProperty(category);
-        this.amount = new SimpleDoubleProperty(amount);
+    public Transaction() {}
+
+    public Transaction(int id, String title, String category, double amount, String type, LocalDate date, String note, int userId) {
+        this.id = id;
+        this.title = title;
+        this.category = category;
+        this.amount = amount;
+        this.type = type;
+        this.date = date;
+        this.note = note;
+        this.userId = userId;
     }
 
-    public String getDescription() { return description.get(); }
-    public void setDescription(String desc) { description.set(desc); }
-    public StringProperty descriptionProperty() { return description; }
+    // Getters and Setters
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public String getCategory() { return category.get(); }
-    public void setCategory(String cat) { category.set(cat); }
-    public StringProperty categoryProperty() { return category; }
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
 
-    public double getAmount() { return amount.get(); }
-    public void setAmount(double amt) { amount.set(amt); }
-    public DoubleProperty amountProperty() { return amount; }
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
+
+    public double getAmount() { return amount; }
+    public void setAmount(double amount) { this.amount = amount; }
+
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
+
+    public LocalDate getDate() { return date; }
+    public void setDate(LocalDate date) { this.date = date; }
+
+    public String getNote() { return note; }
+    public void setNote(String note) { this.note = note; }
+
+    public int getUserId() { return userId; }
+    public void setUserId(int userId) { this.userId = userId; }
 }

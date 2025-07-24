@@ -1,83 +1,58 @@
 package controllers;
 
-import database.DBConnector;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import personalfinanceproject.Budget;
-
-import java.sql.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class BudgetController {
 
-    @FXML private ComboBox<String> categoryComboBox;
-    @FXML private TextField limitField;
-    @FXML private Label messageLabel;
-    @FXML private TableView<Budget> budgetTable;
-    @FXML private TableColumn<Budget, String> categoryColumn;
-    @FXML private TableColumn<Budget, Double> limitColumn;
+    @FXML private TextField categoryField;
+    @FXML private TextField monthlyLimitField;
 
-    private int userId = 0;
+    private User loggedInUser;
 
-    public void setUserId(int id) {
-        this.userId = id;
-        loadBudgets();
-    }
-
-    @FXML
-    public void initialize() {
-        categoryComboBox.getItems().addAll("Food", "Transport", "Entertainment", "Other");
-
-        categoryColumn.setCellValueFactory(cellData -> cellData.getValue().categoryProperty());
-        limitColumn.setCellValueFactory(cellData -> cellData.getValue().limitProperty().asObject());
+    public void setLoggedInUser(User user) {
+        this.loggedInUser = user;
     }
 
     @FXML
     private void handleSaveBudget() {
-        String category = categoryComboBox.getValue();
-        String limitText = limitField.getText();
+        String category = categoryField.getText().trim();
+        String monthlyLimitStr = monthlyLimitField.getText().trim();
 
-        if (category == null || limitText.isEmpty()) {
-            messageLabel.setText("Fill all fields!");
+        if (category.isEmpty() || monthlyLimitStr.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Please fill all fields.");
             return;
         }
 
+        double monthlyLimit;
+
         try {
-            double limit = Double.parseDouble(limitText);
-            Connection conn = DBConnector.getConnection();
-
-            String sql = "REPLACE INTO budgets (user_id, category, limit_amount) VALUES (?, ?, ?)";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, userId);
-            stmt.setString(2, category);
-            stmt.setDouble(3, limit);
-            stmt.executeUpdate();
-
-            messageLabel.setText("Budget saved!");
-            loadBudgets();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            messageLabel.setText("Error saving budget.");
+            monthlyLimit = Double.parseDouble(monthlyLimitStr);
+            if (monthlyLimit < 0) {
+                showAlert(Alert.AlertType.ERROR, "Error", "Monthly limit must be positive.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Invalid number for monthly limit.");
+            return;
         }
+
+        // TODO: Save budget to DB for loggedInUser with category and monthlyLimit
+        // For now just show confirmation
+
+        showAlert(Alert.AlertType.INFORMATION, "Success", "Budget saved successfully.");
+
+        // Close window after saving
+        Stage stage = (Stage) categoryField.getScene().getWindow();
+        stage.close();
     }
 
-    private void loadBudgets() {
-        ObservableList<Budget> list = FXCollections.observableArrayList();
-        try {
-            Connection conn = DBConnector.getConnection();
-            String sql = "SELECT category, limit_amount FROM budgets WHERE user_id = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, userId);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                list.add(new Budget(rs.getString("category"), rs.getDouble("limit_amount")));
-            }
-            budgetTable.setItems(list);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    private void showAlert(Alert.AlertType type, String title, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

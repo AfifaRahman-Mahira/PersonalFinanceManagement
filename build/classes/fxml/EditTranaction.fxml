@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.EditTransactionController" prefWidth="400" prefHeight="500">
+
+    <VBox spacing="12" alignment="CENTER" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="20" AnchorPane.bottomAnchor="20">
+        <Label text="Edit Transaction" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+
+        <Label text="Description:" />
+        <TextField fx:id="descriptionField" promptText="Description" />
+
+        <Label text="Category:" />
+        <TextField fx:id="categoryField" promptText="Category" />
+
+        <Label text="Amount:" />
+        <TextField fx:id="amountField" promptText="Amount" />
+
+        <Label text="Type:" />
+        <ComboBox fx:id="typeComboBox" promptText="Type">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Income" />
+                    <String fx:value="Expense" />
+                </FXCollections>
+            </items>
+        </ComboBox>
+
+        <Label text="Date:" />
+        <DatePicker fx:id="datePicker" promptText="Select Date" />
+
+        <Label text="Note:" />
+        <TextArea fx:id="noteField" promptText="Note" prefRowCount="4" wrapText="true" />
+
+        <HBox spacing="20" alignment="CENTER_RIGHT" padding="10 0 0 0">
+            <Button text="Save" onAction="#handleSave" />
+            <Button text="Cancel" onAction="#handleCancel" />
+        </HBox>
+    </VBox>
+
+</AnchorPane>

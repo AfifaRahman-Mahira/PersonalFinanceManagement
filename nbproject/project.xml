@@ -16,6 +16,7 @@
             <name>PersonalFinanceProject</name>
             <explicit-platform explicit-source-supported="true"/>
             <source-roots>
+                <root id="src.resource.dir"/>
                 <root id="src.dir"/>
             </source-roots>
             <test-roots>
