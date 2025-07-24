@@ -3,68 +3,65 @@ package controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class AddTransactionController {
 
-    @FXML private TextField titleField;   // changed here
+    @FXML private TextField titleField;
     @FXML private TextField categoryField;
     @FXML private TextField amountField;
-    @FXML private ComboBox<String> typeComboBox;
+    @FXML private RadioButton incomeRadio;
+    @FXML private RadioButton expenseRadio;
     @FXML private DatePicker datePicker;
-    @FXML private TextArea noteField;
+    @FXML private TextField noteField;
 
-    private int userId;
-    private DashboardController parentController;
+    private ToggleGroup typeGroup;
+    private DashboardController dashboardController;
+    private Transaction selectedTransaction;
 
-    public void setUserId(int userId, DashboardController parentController) {
-        this.userId = userId;
-        this.parentController = parentController;
+    public void setDashboardController(DashboardController controller) {
+        this.dashboardController = controller;
+    }
+
+    public void setTransactionToEdit(Transaction transaction) {
+        this.selectedTransaction = transaction;
+
+        titleField.setText(transaction.getTitle());
+        categoryField.setText(transaction.getCategory());
+        amountField.setText(String.valueOf(transaction.getAmount()));
+
+        if ("Income".equalsIgnoreCase(transaction.getType())) {
+            incomeRadio.setSelected(true);
+        } else {
+            expenseRadio.setSelected(true);
+        }
+
+        datePicker.setValue(transaction.getDate());
+        noteField.setText(transaction.getNote());
     }
 
     @FXML
     private void initialize() {
-        typeComboBox.getItems().addAll("Income", "Expense");
+        typeGroup = new ToggleGroup();
+        incomeRadio.setToggleGroup(typeGroup);
+        expenseRadio.setToggleGroup(typeGroup);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-        datePicker.setConverter(new StringConverter<LocalDate>() {
-            @Override
-            public String toString(LocalDate date) {
-                if (date != null) {
-                    return formatter.format(date);
-                } else {
-                    return "";
-                }
-            }
-
-            @Override
-            public LocalDate fromString(String string) {
-                if (string != null && !string.isEmpty()) {
-                    return LocalDate.parse(string, formatter);
-                } else {
-                    return null;
-                }
-            }
-        });
-
-        datePicker.setPromptText("yyyy-MM-dd");
+        incomeRadio.setSelected(true);
+        datePicker.setValue(LocalDate.now());
     }
 
     @FXML
-    private void handleSave() {
-        String title = titleField.getText();  // changed here
-        String category = categoryField.getText();
-        String amountText = amountField.getText();
-        String type = typeComboBox.getValue();
+    private void saveTransaction() {
+        String title = titleField.getText().trim();
+        String category = categoryField.getText().trim();
+        String amountText = amountField.getText().trim();
+        RadioButton selectedTypeRadio = (RadioButton) typeGroup.getSelectedToggle();
         LocalDate date = datePicker.getValue();
-        String note = noteField.getText();
+        String note = noteField.getText().trim();
 
-        if(title.isEmpty() || category.isEmpty() || amountText.isEmpty() || type == null || date == null) {
-            showAlert(Alert.AlertType.ERROR, "Validation Error", "Please fill all required fields.");
+        if (title.isEmpty() || category.isEmpty() || amountText.isEmpty() || selectedTypeRadio == null || date == null) {
+            showAlert("Validation Error", "Please fill all required fields.");
             return;
         }
 
@@ -72,44 +69,53 @@ public class AddTransactionController {
         try {
             amount = Double.parseDouble(amountText);
         } catch (NumberFormatException e) {
-            showAlert(Alert.AlertType.ERROR, "Validation Error", "Amount must be a number.");
+            showAlert("Validation Error", "Amount must be a valid number.");
             return;
         }
 
-        Transaction transaction = new Transaction();
-        transaction.setUserId(userId);
-        transaction.setTitle(title);  // changed here
-        transaction.setCategory(category);
-        transaction.setAmount(amount);
-        transaction.setType(type);
-        transaction.setDate(date);
-        transaction.setNote(note);
+        String type = selectedTypeRadio.getText();
+        TransactionDAO dao = new TransactionDAO();
+        boolean success;
 
-        boolean success = new TransactionDAO().addTransaction(transaction);
-        if(success) {
-            showAlert(Alert.AlertType.INFORMATION, "Success", "Transaction added successfully.");
-            parentController.loadTransactions(); // Refresh table
-            parentController.calculateTotals(); // Update totals
+        if (selectedTransaction != null) {
+            selectedTransaction.setTitle(title);
+            selectedTransaction.setCategory(category);
+            selectedTransaction.setAmount(amount);
+            selectedTransaction.setType(type);
+            selectedTransaction.setDate(date);
+            selectedTransaction.setNote(note);
+            success = dao.updateTransaction(selectedTransaction);
+        } else {
+            Transaction transaction = new Transaction(
+                    0,
+                    title,
+                    category,
+                    amount,
+                    type,
+                    date,
+                    note,
+                    dashboardController.getUserId()
+            );
+            success = dao.addTransaction(transaction);
+        }
+
+        if (success) {
+            dashboardController.loadTransactions();
+            dashboardController.calculateTotals();
             closeWindow();
         } else {
-            showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to add transaction.");
+            showAlert("Error", "Could not save transaction.");
         }
     }
 
-    @FXML
-    private void handleCancel() {
-        closeWindow();
-    }
-
     private void closeWindow() {
-        Stage stage = (Stage) titleField.getScene().getWindow();  // changed here
+        Stage stage = (Stage) titleField.getScene().getWindow();
         stage.close();
     }
 
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
-        alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }

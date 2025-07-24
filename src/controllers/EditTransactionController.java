@@ -4,78 +4,90 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.time.LocalDate;
-
 public class EditTransactionController {
 
-    @FXML private TextField titleField;   // changed here
-    @FXML private TextField categoryField;
+    @FXML private TextField titleField;
+    @FXML private ComboBox<String> categoryComboBox;
     @FXML private TextField amountField;
     @FXML private ComboBox<String> typeComboBox;
     @FXML private DatePicker datePicker;
-    @FXML private TextArea noteField;
+    @FXML private TextArea noteArea;
 
     private Transaction transaction;
-    private boolean saved = false;
+    private DashboardController dashboardController;
+
+    @FXML
+    private void initialize() {
+        // একবার কম্বোবক্স আইটেম সেট করা হচ্ছে
+        categoryComboBox.getItems().addAll("Food", "Transport", "Shopping", "Utilities");
+        typeComboBox.getItems().addAll("Income", "Expense");
+    }
 
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
 
-        // Prefill fields with existing data
-        titleField.setText(transaction.getTitle());  // changed here
-        categoryField.setText(transaction.getCategory());
+        // বিদ্যমান ডেটা ফিল্ডে সেট করো
+        titleField.setText(transaction.getTitle());
+        categoryComboBox.setValue(transaction.getCategory());
         amountField.setText(String.valueOf(transaction.getAmount()));
         typeComboBox.setValue(transaction.getType());
         datePicker.setValue(transaction.getDate());
-        noteField.setText(transaction.getNote());
+        noteArea.setText(transaction.getNote());
     }
 
-    public boolean isSaved() {
-        return saved;
+    public void setDashboardController(DashboardController controller) {
+        this.dashboardController = controller;
     }
 
     @FXML
-    private void handleSave() {
+    private void handleUpdate() {
+        String title = titleField.getText();
+        String category = categoryComboBox.getValue();
+        String amountStr = amountField.getText();
+        String type = typeComboBox.getValue();
+        String note = noteArea.getText();
+
+        if (title.isEmpty() || category == null || amountStr.isEmpty() || type == null || datePicker.getValue() == null) {
+            showAlert(Alert.AlertType.ERROR, "Form Error", "Please fill all required fields.");
+            return;
+        }
+
+        double amount;
         try {
-            String title = titleField.getText();   // changed here
-            String category = categoryField.getText();
-            double amount = Double.parseDouble(amountField.getText());
-            String type = typeComboBox.getValue();
-            LocalDate date = datePicker.getValue();
-            String note = noteField.getText();
-
-            if (title.isEmpty() || category.isEmpty() || type == null || date == null) {
-                showAlert("Please fill in all required fields.");
-                return;
-            }
-
-            transaction.setTitle(title);  // changed here
-            transaction.setCategory(category);
-            transaction.setAmount(amount);
-            transaction.setType(type);
-            transaction.setDate(date);
-            transaction.setNote(note);
-
-            saved = true;
-
-            Stage stage = (Stage) titleField.getScene().getWindow();  // changed here
-            stage.close();
+            amount = Double.parseDouble(amountStr);
         } catch (NumberFormatException e) {
-            showAlert("Amount must be a valid number.");
+            showAlert(Alert.AlertType.ERROR, "Amount Error", "Amount must be a valid number.");
+            return;
+        }
+
+        transaction.setTitle(title);
+        transaction.setCategory(category);
+        transaction.setAmount(amount);
+        transaction.setType(type);
+        transaction.setDate(datePicker.getValue());
+        transaction.setNote(note);
+
+        TransactionDAO dao = new TransactionDAO();
+        boolean success = dao.updateTransaction(transaction);
+
+        if (success) {
+            showAlert(Alert.AlertType.INFORMATION, "Success", "Transaction updated successfully.");
+            dashboardController.refreshTransactionTable();
+            closeWindow();
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Failed", "Failed to update transaction.");
         }
     }
 
-    @FXML
-    private void handleCancel() {
-        Stage stage = (Stage) titleField.getScene().getWindow();  // changed here
+    private void closeWindow() {
+        Stage stage = (Stage) titleField.getScene().getWindow();
         stage.close();
     }
 
-    private void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Validation Error");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
+    private void showAlert(Alert.AlertType type, String title, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setContentText(content);
         alert.showAndWait();
     }
 }

@@ -4,13 +4,13 @@ import java.time.LocalDate;
 
 public class Transaction {
     private int id;
-    private String title;  // এখানে 'title' রাখা হয়েছে (আগে ছিল description)
+    private int userId;
+    private String title;
     private String category;
     private double amount;
-    private String type;  // Expense or Income
+    private String type;  // Income or Expense
     private LocalDate date;
     private String note;
-    private int userId;
 
     public Transaction() {}
 
@@ -26,8 +26,12 @@ public class Transaction {
     }
 
     // Getters and Setters
+    
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
+
+    public int getUserId() { return userId; }
+    public void setUserId(int userId) { this.userId = userId; }
 
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
@@ -46,7 +50,4 @@ public class Transaction {
 
     public String getNote() { return note; }
     public void setNote(String note) { this.note = note; }
-
-    public int getUserId() { return userId; }
-    public void setUserId(int userId) { this.userId = userId; }
 }
