@@ -30,6 +30,12 @@ public class DashboardController {
     @FXML private Label totalExpenseLabel;
     @FXML private Label remainingBudgetLabel;
 
+    // Currency Converter fields
+    @FXML private TextField amountField;
+    @FXML private ComboBox<String> fromCurrencyCombo;
+    @FXML private ComboBox<String> toCurrencyCombo;
+    @FXML private Label convertedResultLabel;
+
     private int currentUserId;
     private ObservableList<Transaction> transactionList = FXCollections.observableArrayList();
 
@@ -96,49 +102,82 @@ public class DashboardController {
 
     @FXML
     public void initialize() {
+        // Transaction Table bindings
         colDescription.setCellValueFactory(new PropertyValueFactory<>("title"));
         colCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
         colAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         colType.setCellValueFactory(new PropertyValueFactory<>("type"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colNote.setCellValueFactory(new PropertyValueFactory<>("note"));
+
+        // Currency Converter combo box setup
+        if (fromCurrencyCombo != null && toCurrencyCombo != null) {
+            fromCurrencyCombo.setItems(FXCollections.observableArrayList("USD", "BDT", "EUR"));
+            toCurrencyCombo.setItems(FXCollections.observableArrayList("USD", "BDT", "EUR"));
+        }
     }
 
     @FXML
-private void handleEditTransaction() {
-    Transaction selectedTransaction = transactionTable.getSelectionModel().getSelectedItem();
-    if (selectedTransaction == null) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("No Selection");
-        alert.setHeaderText("No Transaction Selected");
-        alert.setContentText("Please select a transaction to edit.");
-        alert.showAndWait();
-        return;
+    private void handleCurrencyConvert() {
+        try {
+            double amount = Double.parseDouble(amountField.getText());
+            String from = fromCurrencyCombo.getValue();
+            String to = toCurrencyCombo.getValue();
+
+            double rate = getExchangeRate(from, to);
+            double converted = amount * rate;
+
+            convertedResultLabel.setText("Converted Amount: " + String.format("%.2f", converted) + " " + to);
+        } catch (Exception e) {
+            convertedResultLabel.setText("Invalid input.");
+        }
     }
 
-    try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/EditTransaction.fxml"));
-        Parent root = loader.load();
+    private double getExchangeRate(String from, String to) {
+        if (from.equals(to)) return 1.0;
 
-        EditTransactionController controller = loader.getController();
-        controller.setTransaction(selectedTransaction);
-        controller.setDashboardController(this);
+        if (from.equals("USD") && to.equals("BDT")) return 110.0;
+        if (from.equals("BDT") && to.equals("USD")) return 0.0091;
+        if (from.equals("EUR") && to.equals("BDT")) return 120.0;
+        if (from.equals("BDT") && to.equals("EUR")) return 0.0083;
 
-        Stage stage = new Stage();
-        stage.setTitle("Edit Transaction");
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setScene(new Scene(root));
-        stage.showAndWait();
-    } catch (IOException e) {
-        e.printStackTrace();
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Load Error");
-        alert.setHeaderText("Could not open the edit dialog");
-        alert.setContentText("Error: " + e.getMessage());
-        alert.showAndWait();
+        return 1.0;
     }
-}
 
+    @FXML
+    private void handleEditTransaction() {
+        Transaction selectedTransaction = transactionTable.getSelectionModel().getSelectedItem();
+        if (selectedTransaction == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Transaction Selected");
+            alert.setContentText("Please select a transaction to edit.");
+            alert.showAndWait();
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/EditTransaction.fxml"));
+            Parent root = loader.load();
+
+            EditTransactionController controller = loader.getController();
+            controller.setTransaction(selectedTransaction);
+            controller.setDashboardController(this);
+
+            Stage stage = new Stage();
+            stage.setTitle("Edit Transaction");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Load Error");
+            alert.setHeaderText("Could not open the edit dialog");
+            alert.setContentText("Error: " + e.getMessage());
+            alert.showAndWait();
+        }
+    }
 
     @FXML
     private void handleAddTransaction() {

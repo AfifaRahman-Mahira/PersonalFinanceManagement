@@ -1,50 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controllers.DashboardController">
+<VBox xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.DashboardController"
+      spacing="20" alignment="TOP_CENTER">
 
-    <top>
-        <HBox spacing="10" BorderPane.alignment="CENTER">
-            <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
-            </padding>
-            <Label fx:id="welcomeLabel" text="Welcome, User!" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <Button text="Add Transaction" onAction="#handleAddTransaction"/>
-            <Button text="Edit Selected" onAction="#handleEditTransaction"/>
-            <Button text="Delete Selected" onAction="#handleDeleteTransaction"/>
-        </HBox>
-    </top>
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
 
-    <center>
-        <TableView fx:id="transactionTable" prefHeight="400" prefWidth="700" BorderPane.alignment="CENTER">
-            <columns>
-                <TableColumn fx:id="colDescription" text="Description" prefWidth="150"/>
-                <TableColumn fx:id="colCategory" text="Category" prefWidth="120"/>
-                <TableColumn fx:id="colAmount" text="Amount" prefWidth="90"/>
-                <TableColumn fx:id="colType" text="Type" prefWidth="90"/>
-                <TableColumn fx:id="colDate" text="Date" prefWidth="120"/>
-                <TableColumn fx:id="colNote" text="Note" prefWidth="130"/>
-            </columns>
-        </TableView>
-    </center>
+    <!-- Welcome label -->
+    <Label fx:id="welcomeLabel" text="Welcome!" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
 
-    <bottom>
-        <HBox spacing="20" BorderPane.alignment="CENTER">
-            <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
-            </padding>
+    <!-- Transaction Summary -->
+    <HBox spacing="40">
+        <VBox spacing="5">
             <Label text="Total Income:"/>
-            <Label fx:id="totalIncomeLabel" text="0.00" style="-fx-font-weight: bold;"/>
+            <Label fx:id="totalIncomeLabel" text="0.00"/>
+        </VBox>
+        <VBox spacing="5">
             <Label text="Total Expense:"/>
-            <Label fx:id="totalExpenseLabel" text="0.00" style="-fx-font-weight: bold;"/>
+            <Label fx:id="totalExpenseLabel" text="0.00"/>
+        </VBox>
+        <VBox spacing="5">
             <Label text="Remaining Budget:"/>
-            <Label fx:id="remainingBudgetLabel" text="0.00" style="-fx-font-weight: bold;"/>
-        </HBox>
-    </bottom>
+            <Label fx:id="remainingBudgetLabel" text="0.00"/>
+        </VBox>
+    </HBox>
 
-</BorderPane>
+    <!-- TableView for Transactions -->
+    <TableView fx:id="transactionTable" prefHeight="300" prefWidth="700">
+        <columns>
+            <TableColumn fx:id="colDescription" text="Title" prefWidth="100"/>
+            <TableColumn fx:id="colCategory" text="Category" prefWidth="100"/>
+            <TableColumn fx:id="colAmount" text="Amount" prefWidth="100"/>
+            <TableColumn fx:id="colType" text="Type" prefWidth="100"/>
+            <TableColumn fx:id="colDate" text="Date" prefWidth="150"/>
+            <TableColumn fx:id="colNote" text="Note" prefWidth="150"/>
+        </columns>
+    </TableView>
+
+    <!-- Transaction Buttons -->
+    <HBox spacing="15" alignment="CENTER">
+        <Button text="Add Transaction" onAction="#handleAddTransaction"/>
+        <Button text="Edit Selected" onAction="#handleEditTransaction"/>
+        <Button text="Delete Selected" onAction="#handleDeleteTransaction"/>
+    </HBox>
+
+    <!-- Currency Converter Section -->
+    <VBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Currency Converter" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+        <HBox spacing="10">
+            <TextField fx:id="amountField" promptText="Amount"/>
+            <ComboBox fx:id="fromCurrencyCombo" promptText="From"/>
+            <ComboBox fx:id="toCurrencyCombo" promptText="To"/>
+            <Button text="Convert" onAction="#handleCurrencyConvert"/>
+        </HBox>
+        <Label fx:id="convertedResultLabel" text="Converted amount will appear here"/>
+    </VBox>
+
+</VBox>
