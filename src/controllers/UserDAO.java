@@ -12,7 +12,7 @@ public class UserDAO {
         try (Connection conn = DBConnector.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, user.getUsername());
-            ps.setString(2, user.getPassword());  // Ideally hash password in real app
+            ps.setString(2, user.getPassword());  
             ps.setString(3, user.getFullName());
             ps.setString(4, user.getEmail());
             ps.setString(5, user.getGender());

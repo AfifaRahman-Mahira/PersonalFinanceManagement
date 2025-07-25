@@ -18,7 +18,7 @@ public class EditTransactionController {
 
     @FXML
     private void initialize() {
-        // একবার কম্বোবক্স আইটেম সেট করা হচ্ছে
+       
         categoryComboBox.getItems().addAll("Food", "Transport", "Shopping", "Utilities");
         typeComboBox.getItems().addAll("Income", "Expense");
     }
@@ -26,7 +26,7 @@ public class EditTransactionController {
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
 
-        // বিদ্যমান ডেটা ফিল্ডে সেট করো
+      
         titleField.setText(transaction.getTitle());
         categoryComboBox.setValue(transaction.getCategory());
         amountField.setText(String.valueOf(transaction.getAmount()));

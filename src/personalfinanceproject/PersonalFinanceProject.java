@@ -14,11 +14,11 @@ public class PersonalFinanceProject extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            // FXML ফাইলের সঠিক path
+           
             URL fxmlLocation = getClass().getResource("/fxml/login.fxml");
             
             if (fxmlLocation == null) {
-                System.err.println("❌ FXML file not found at /resource/fxml/login.fxml");
+                System.err.println("❌ FXML file not found at /fxml/login.fxml");
                 return;
             }
 
