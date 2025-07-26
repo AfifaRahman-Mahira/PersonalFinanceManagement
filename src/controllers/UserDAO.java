@@ -1,11 +1,11 @@
 package controllers;
 
 import database.DBConnector;
-
 import java.sql.*;
 
 public class UserDAO {
 
+    // User Registration
     public boolean registerUser(User user) {
         String sql = "INSERT INTO users (username, password, full_name, email, gender) VALUES (?, ?, ?, ?, ?)";
 
@@ -26,6 +26,7 @@ public class UserDAO {
         }
     }
 
+    // User Login + Budget Load
     public User loginUser(String username, String password) {
         String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
 
@@ -44,6 +45,10 @@ public class UserDAO {
                 user.setFullName(rs.getString("full_name"));
                 user.setEmail(rs.getString("email"));
                 user.setGender(rs.getString("gender"));
+
+                // ✅ Load Budget Info
+                loadUserBudget(user);
+
                 return user;
             }
         } catch (SQLException e) {
@@ -52,6 +57,45 @@ public class UserDAO {
         return null;
     }
 
+    // Budget Load Method
+    private void loadUserBudget(User user) {
+        String sql = "SELECT * FROM budget WHERE user_id = ?";
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, user.getId());
+            ResultSet rs = ps.executeQuery();
+
+            double total = 0;
+            while (rs.next()) {
+                String category = rs.getString("category");
+                double amount = rs.getDouble("monthly_limit");
+
+                switch (category.toLowerCase()) {
+                    case "food":
+                        user.setFoodBudget(amount);
+                        break;
+                    case "transport":
+                        user.setTransportBudget(amount);
+                        break;
+                    case "shopping":
+                        user.setShoppingBudget(amount);
+                        break;
+                    case "other":
+                        user.setOtherBudget(amount);
+                        break;
+                }
+
+                total += amount;
+            }
+
+            user.setTotalBudget(total);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Username check
     public boolean checkUsernameExists(String username) {
         String sql = "SELECT id FROM users WHERE username = ?";
 
@@ -62,10 +106,11 @@ public class UserDAO {
             return rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
-            return true;  // To be safe, assume exists on error
+            return true;  // assume exists on error
         }
     }
 
+    // Email check
     public boolean checkEmailExists(String email) {
         String sql = "SELECT id FROM users WHERE email = ?";
 

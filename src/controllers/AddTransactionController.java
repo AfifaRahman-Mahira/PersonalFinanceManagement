@@ -3,7 +3,8 @@ package controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
+import controllers.Transaction;
+import controllers.TransactionDAO;
 import java.time.LocalDate;
 
 public class AddTransactionController {
@@ -85,7 +86,8 @@ public class AddTransactionController {
             selectedTransaction.setDate(date);
             selectedTransaction.setNote(note);
             success = dao.updateTransaction(selectedTransaction);
-        } else {
+        } else {System.out.println("DEBUG: userId from dashboard = " + dashboardController.getUserId());
+
             Transaction transaction = new Transaction(
                     0,
                     title,

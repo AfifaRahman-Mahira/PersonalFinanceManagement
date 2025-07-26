@@ -17,42 +17,53 @@ public class AuthController {
     private final UserDAO userDAO = new UserDAO();
 
     @FXML
-    public void handleLogin() {
-        String username = usernameField.getText();
-        String password = passwordField.getText();
+public void handleLogin() {
+    String username = usernameField.getText();
+    String password = passwordField.getText();
 
-        if (username.isEmpty() || password.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Please enter username and password.");
-            return;
-        }
-
-        User user = userDAO.loginUser(username, password);
-
-        if (user != null) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Dashboard.fxml"));
-                Parent root = loader.load();
-
-                DashboardController dashboardController = loader.getController();
-                dashboardController.setLoggedInUser(user);
-
-                Stage stage = new Stage();
-                stage.setTitle("Dashboard");
-                stage.setScene(new Scene(root));
-                stage.show();
-
-                // Close current window
-                Stage loginStage = (Stage) usernameField.getScene().getWindow();
-                loginStage.close();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                showAlert(Alert.AlertType.ERROR, "Error", "Failed to open Dashboard.");
-            }
-        } else {
-            showAlert(Alert.AlertType.ERROR, "Login Failed", "Invalid username or password.");
-        }
+    if (username.isEmpty() || password.isEmpty()) {
+        showAlert(Alert.AlertType.ERROR, "Error", "Please enter username and password.");
+        return;
     }
+
+    User user = userDAO.loginUser(username, password);
+
+    if (user != null) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Dashboard.fxml"));
+            Parent root = loader.load();
+
+            DashboardController dashboardController = loader.getController();
+            
+            // Pass user data
+            dashboardController.setLoggedInUser(user);
+
+            // 👉 Budget values pass করার জন্য (Assuming User class has these methods)
+            dashboardController.setBudgetValues(
+                user.getTotalBudget(),
+                user.getFoodBudget(),
+                user.getTransportBudget(),
+                user.getShoppingBudget(),
+                user.getOtherBudget()
+            );
+
+            Stage stage = new Stage();
+            stage.setTitle("Dashboard");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            // Close current login window
+            Stage loginStage = (Stage) usernameField.getScene().getWindow();
+            loginStage.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to open Dashboard.");
+        }
+    } else {
+        showAlert(Alert.AlertType.ERROR, "Login Failed", "Invalid username or password.");
+    }
+}
 
     @FXML
     public void openSignup() {

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controllers.AddBudgetController"
+      spacing="10" padding="20">
+
+    <Label text="Set Monthly Budget" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+    <Label text="Category:"/>
+    <ComboBox fx:id="categoryComboBox" promptText="Select Category"/>
+
+    <Label text="Monthly Limit:"/>
+    <TextField fx:id="limitField" promptText="Enter Monthly Limit"/>
+
+    <Button text="Save Budget" onAction="#handleSaveBudget"/>
+
+    <Label fx:id="statusLabel" textFill="green"/>
+</VBox>

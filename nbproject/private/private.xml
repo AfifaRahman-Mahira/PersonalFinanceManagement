@@ -3,18 +3,31 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/resource/fxml/Dashboard.fxml</file>
             <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/resource/fxml/login.fxml</file>
             <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/src/personalfinanceproject/PersonalFinanceProject.java</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/src/controllers/UserDAO.java</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/src/controllers/SignupController.java</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/src/controllers/AddBudgetController.java</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/src/controllers/EditTransactionController.java</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/src/controllers/LoginSession.java</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/resource/fxml/set_budget.fxml</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/src/controllers/User.java</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/src/controllers/BudgetController.java</file>
             <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/resource/fxml/EditTransaction.fxml</file>
-            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/resource/fxml/add_transaction.fxml</file>
             <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/src/database/DBConnector.java</file>
             <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/src/controllers/TransactionDAO.java</file>
             <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/src/controllers/DashboardController.java</file>
             <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/src/controllers/Transaction.java</file>
-            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/src/controllers/BudgetController.java</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/src/controllers/AuthController.java</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/src/controllers/Budget.java</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/src/controllers/BudgetDAO.java</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/resource/fxml/add_budget.fxml</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/resource/fxml/Dashboard.fxml</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/resource/fxml/add_transaction.fxml</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/resource/fxml/signup.fxml</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/resource/fxml/Budget.fxml</file>
             <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/src/controllers/AddTransactionController.java</file>
-            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/src/controllers/EditTransactionController.java</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PersonalFinanceProject/src/controllers/SetBudgetController.java</file>
         </group>
     </open-files>
 </project-private>
