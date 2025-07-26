@@ -7,57 +7,75 @@
 <VBox xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="controllers.DashboardController"
-      spacing="10">
-
-    <padding>
-        <Insets top="10" right="10" bottom="10" left="10"/>
-    </padding>
+      spacing="15"
+      style="-fx-background-color: #f8f4f0; -fx-padding: 20;">
 
     <!-- Welcome Text -->
-    <Label fx:id="welcomeLabel" text="Welcome, User!" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+    <Label fx:id="welcomeLabel" text="Welcome, User!"
+           style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #b89b82; -fx-font-family: 'Segoe UI Semibold';" />
 
     <!-- Budget Summary -->
     <HBox spacing="20" alignment="CENTER_LEFT">
 
-        <VBox spacing="5" style="-fx-border-color: gray; -fx-padding: 10;">
-            <Label text="Total Budget:"/>
-            <Label fx:id="totalBudgetLabel" text="৳ 0.00"/>
-            <Label text="Remaining:"/>
-            <Label fx:id="totalRemainingLabel" text="৳ 0.00"/>
+        <VBox spacing="6" style="-fx-background-color: #b89b82; -fx-padding: 12; -fx-background-radius: 8;">
+            <Label text="Total Budget:"
+                   style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+            <Label fx:id="totalBudgetLabel" text="৳ 0.00"
+                   style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
+            <Label text="Remaining:"
+                   style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+            <Label fx:id="totalRemainingLabel" text="৳ 0.00"
+                   style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;"/>
         </VBox>
 
-        <VBox spacing="5" style="-fx-border-color: gray; -fx-padding: 10;">
-            <Label text="Food Budget:"/>
-            <Label fx:id="foodBudgetLabel" text="৳ 0.00"/>
-            <Label text="Remaining:"/>
-            <Label fx:id="foodRemainingLabel" text="৳ 0.00"/>
+        <VBox spacing="6" style="-fx-background-color: #a67c52; -fx-padding: 12; -fx-background-radius: 8;">
+            <Label text="Food Budget:"
+                   style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+            <Label fx:id="foodBudgetLabel" text="৳ 0.00"
+                   style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
+            <Label text="Remaining:"
+                   style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+            <Label fx:id="foodRemainingLabel" text="৳ 0.00"
+                   style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;"/>
         </VBox>
 
-        <VBox spacing="5" style="-fx-border-color: gray; -fx-padding: 10;">
-            <Label text="Transport Budget:"/>
-            <Label fx:id="transportBudgetLabel" text="৳ 0.00"/>
-            <Label text="Remaining:"/>
-            <Label fx:id="transportRemainingLabel" text="৳ 0.00"/>
+        <VBox spacing="6" style="-fx-background-color: #9c7b57; -fx-padding: 12; -fx-background-radius: 8;">
+            <Label text="Transport Budget:"
+                   style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+            <Label fx:id="transportBudgetLabel" text="৳ 0.00"
+                   style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
+            <Label text="Remaining:"
+                   style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+            <Label fx:id="transportRemainingLabel" text="৳ 0.00"
+                   style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;"/>
         </VBox>
 
-        <VBox spacing="5" style="-fx-border-color: gray; -fx-padding: 10;">
-            <Label text="Shopping Budget:"/>
-            <Label fx:id="shoppingBudgetLabel" text="৳ 0.00"/>
-            <Label text="Remaining:"/>
-            <Label fx:id="shoppingRemainingLabel" text="৳ 0.00"/>
+        <VBox spacing="6" style="-fx-background-color: #836953; -fx-padding: 12; -fx-background-radius: 8;">
+            <Label text="Shopping Budget:"
+                   style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+            <Label fx:id="shoppingBudgetLabel" text="৳ 0.00"
+                   style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
+            <Label text="Remaining:"
+                   style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+            <Label fx:id="shoppingRemainingLabel" text="৳ 0.00"
+                   style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;"/>
         </VBox>
 
-        <VBox spacing="5" style="-fx-border-color: gray; -fx-padding: 10;">
-            <Label text="Other Budget:"/>
-            <Label fx:id="otherBudgetLabel" text="৳ 0.00"/>
-            <Label text="Remaining:"/>
-            <Label fx:id="otherRemainingLabel" text="৳ 0.00"/>
+        <VBox spacing="6" style="-fx-background-color: #a67c52; -fx-padding: 12; -fx-background-radius: 8;">
+            <Label text="Other Budget:"
+                   style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+            <Label fx:id="otherBudgetLabel" text="৳ 0.00"
+                   style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
+            <Label text="Remaining:"
+                   style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+            <Label fx:id="otherRemainingLabel" text="৳ 0.00"
+                   style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;"/>
         </VBox>
-
     </HBox>
 
     <!-- Transaction Table -->
-    <TableView fx:id="transactionTable" prefHeight="300" prefWidth="600">
+    <TableView fx:id="transactionTable" prefHeight="320" prefWidth="700"
+               style="-fx-background-color: white; -fx-border-radius: 8; -fx-background-radius: 8;">
         <columns>
             <TableColumn fx:id="colDescription" text="Description" prefWidth="150"/>
             <TableColumn fx:id="colCategory" text="Category" prefWidth="100"/>
@@ -68,47 +86,50 @@
         </columns>
     </TableView>
 
-    <!-- Summary of Income/Expense -->
-    <HBox spacing="20">
-        <padding>
-            <Insets top="10" right="10" bottom="10" left="10"/>
-        </padding>
-
-        <VBox spacing="5">
-            <Label text="Total Income:"/>
-            <Label fx:id="totalIncomeLabel" text="0.00"/>
+    <!-- Income/Expense Summary -->
+    <HBox spacing="25" alignment="CENTER_LEFT" style="-fx-padding: 10 0 10 0;">
+        <VBox spacing="6" style="-fx-background-color: #b89b82; -fx-padding: 10; -fx-background-radius: 8;">
+            <Label text="Total Income:" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+            <Label fx:id="totalIncomeLabel" text="0.00"
+                   style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
         </VBox>
 
-        <VBox spacing="5">
-            <Label text="Total Expense:"/>
-            <Label fx:id="totalExpenseLabel" text="0.00"/>
+        <VBox spacing="6" style="-fx-background-color: #9c7b57; -fx-padding: 10; -fx-background-radius: 8;">
+            <Label text="Total Expense:" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+            <Label fx:id="totalExpenseLabel" text="0.00"
+                   style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
         </VBox>
 
-        <VBox spacing="5">
-            <Label text="Remaining Balance:"/>
-            <Label fx:id="remainingBalanceLabel" text="0.00"/>
+        <VBox spacing="6" style="-fx-background-color: #836953; -fx-padding: 10; -fx-background-radius: 8;">
+            <Label text="Remaining Balance:" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+            <Label fx:id="remainingBalanceLabel" text="0.00"
+                   style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
         </VBox>
     </HBox>
 
     <!-- Currency Converter -->
     <HBox spacing="10" alignment="CENTER_LEFT">
-        <TextField fx:id="amountField" promptText="Amount" prefWidth="100"/>
-        <ComboBox fx:id="fromCurrencyCombo" prefWidth="80"/>
-        <ComboBox fx:id="toCurrencyCombo" prefWidth="80"/>
-        <Button text="Convert" onAction="#handleCurrencyConvert"/>
-        <Label fx:id="convertedResultLabel" text=""/>
+        <TextField fx:id="amountField" promptText="Amount" prefWidth="100"
+                   style="-fx-background-radius: 6; -fx-border-radius: 6; -fx-padding: 5;"/>
+        <ComboBox fx:id="fromCurrencyCombo" prefWidth="80"
+                  style="-fx-background-radius: 6; -fx-border-radius: 6;"/>
+        <ComboBox fx:id="toCurrencyCombo" prefWidth="80"
+                  style="-fx-background-radius: 6; -fx-border-radius: 6;"/>
+        <Button text="Convert" onAction="#handleCurrencyConvert"
+                style="-fx-background-color: #b89b82; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-weight: bold;"/>
+        <Label fx:id="convertedResultLabel" text="" style="-fx-font-weight: bold; -fx-text-fill: #b89b82;"/>
     </HBox>
 
     <!-- Buttons -->
-    <HBox spacing="15" alignment="CENTER_RIGHT">
-        <padding>
-            <Insets top="10" right="10" bottom="10" left="10"/>
-        </padding>
-
-        <Button text="Add Transaction" onAction="#handleAddTransaction"/>
-        <Button text="Edit Transaction" onAction="#handleEditTransaction"/>
-        <Button text="Delete Transaction" onAction="#handleDeleteTransaction"/>
-        <Button text="Set Budget" onAction="#handleOpenSetBudget"/>
+    <HBox spacing="15" alignment="CENTER_RIGHT" style="-fx-padding: 15 0 0 0;">
+        <Button text="Add Transaction" onAction="#handleAddTransaction"
+                style="-fx-background-color: #b89b82; -fx-text-fill: white; -fx-background-radius: 6;"/>
+        <Button text="Edit Transaction" onAction="#handleEditTransaction"
+                style="-fx-background-color: #a67c52; -fx-text-fill: white; -fx-background-radius: 6;"/>
+        <Button text="Delete Transaction" onAction="#handleDeleteTransaction"
+                style="-fx-background-color: #d32f2f; -fx-text-fill: white; -fx-background-radius: 6;"/>
+        <Button text="Set Budget" onAction="#handleOpenSetBudget"
+                style="-fx-background-color: #836953; -fx-text-fill: white; -fx-background-radius: 6;"/>
     </HBox>
 
 </VBox>

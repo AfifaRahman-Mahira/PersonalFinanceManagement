@@ -5,26 +5,40 @@
 <?import javafx.geometry.*?>
 
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="controllers.SignupController" alignment="CENTER" spacing="10" padding="20">
+      fx:controller="controllers.SignupController"
+      alignment="CENTER" spacing="15" padding="25"
+      style="-fx-background-color: #f5f0e6;">
 
-    <Label text="Sign Up" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+    <Label text="Sign Up"
+           style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #3e3e3e;" />
 
-    <TextField fx:id="fullNameField" promptText="Full Name" maxWidth="250" />
-    <TextField fx:id="usernameField" promptText="Username" maxWidth="250" />
-    <PasswordField fx:id="passwordField" promptText="Password" maxWidth="250" />
-    <TextField fx:id="emailField" promptText="Email" maxWidth="250" />
+    <TextField fx:id="fullNameField" promptText="Full Name" maxWidth="280"
+               style="-fx-background-radius: 8; -fx-padding: 8;" />
+
+    <TextField fx:id="usernameField" promptText="Username" maxWidth="280"
+               style="-fx-background-radius: 8; -fx-padding: 8;" />
+
+    <PasswordField fx:id="passwordField" promptText="Password" maxWidth="280"
+                   style="-fx-background-radius: 8; -fx-padding: 8;" />
+
+    <TextField fx:id="emailField" promptText="Email" maxWidth="280"
+               style="-fx-background-radius: 8; -fx-padding: 8;" />
 
     <HBox spacing="10" alignment="CENTER_LEFT">
-        <Label text="Gender:" />
-        <RadioButton fx:id="maleRadio" text="Male" toggleGroup="$genderGroup" />
-        <RadioButton fx:id="femaleRadio" text="Female" toggleGroup="$genderGroup" />
+        <Label text="Gender:"
+               style="-fx-font-size: 14px; -fx-text-fill: #333;" />
+        <RadioButton fx:id="maleRadio" text="Male" toggleGroup="$genderGroup"
+                     style="-fx-text-fill: #3e3e3e;" />
+        <RadioButton fx:id="femaleRadio" text="Female" toggleGroup="$genderGroup"
+                     style="-fx-text-fill: #3e3e3e;" />
     </HBox>
 
-    <Button text="Register" onAction="#handleSignup" maxWidth="150" />
+    <Button text="Register" onAction="#handleSignup" maxWidth="160"
+            style="-fx-background-color: #d9b99b; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;" />
 
     <HBox spacing="5" alignment="CENTER">
-        <Label text="Already have an account?" />
-        <Button text="Login" onAction="#openLogin" />
+        <Label text="Already have an account?" style="-fx-text-fill: #555;" />
+        <Button text="Login" onAction="#openLogin"
+                style="-fx-background-color: transparent; -fx-text-fill: #8a5c2c; -fx-underline: true;" />
     </HBox>
-
 </VBox>

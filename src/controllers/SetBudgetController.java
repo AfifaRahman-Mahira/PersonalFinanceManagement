@@ -20,10 +20,10 @@ public class SetBudgetController {
 
     private int currentUserId;
 
-    // DashboardController রেফারেন্স রাখতে হবে
+  
     private DashboardController dashboardController;
 
-    // DashboardController সেট করার মেথড
+ 
     public void setDashboardController(DashboardController controller) {
         this.dashboardController = controller;
     }
@@ -43,7 +43,7 @@ public class SetBudgetController {
 
         loadBudgetAndExpenses();
 
-        // ড্যাশবোর্ড আপডেট করো
+       
         if (dashboardController != null) {
             dashboardController.loadBudgets();
             dashboardController.loadTransactions();
@@ -55,7 +55,7 @@ public class SetBudgetController {
         alert.setContentText("Budget saved successfully!");
         alert.showAndWait();
 
-        // উইন্ডো বন্ধ করো
+    
         Stage stage = (Stage) totalField.getScene().getWindow();
         stage.close();
     }

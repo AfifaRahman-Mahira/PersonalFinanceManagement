@@ -4,24 +4,36 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.*?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="controllers.AuthController" alignment="CENTER" spacing="10">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.AuthController"
+            style="-fx-background-color: #f8f4f0;" prefWidth="500" prefHeight="420">
 
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
+    <VBox alignment="CENTER" spacing="15" layoutX="100" layoutY="50" prefWidth="300">
 
-    <Label text="Personal Finance Login" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+        <Label text="Personal Finance Login"
+               style="-fx-font-size: 26px; -fx-text-fill: #333333; -fx-font-weight: bold;" />
 
-    <TextField fx:id="usernameField" promptText="Username" maxWidth="250" />
+        <TextField fx:id="usernameField"
+                   promptText="Username"
+                   maxWidth="250"
+                   style="-fx-background-radius: 6; -fx-padding: 10; -fx-font-size: 14px; -fx-text-fill: #333;" />
 
-    <PasswordField fx:id="passwordField" promptText="Password" maxWidth="250" />
+        <PasswordField fx:id="passwordField"
+                       promptText="Password"
+                       maxWidth="250"
+                       style="-fx-background-radius: 6; -fx-padding: 10; -fx-font-size: 14px; -fx-text-fill: #333;" />
 
-    <Button text="Login" onAction="#handleLogin" maxWidth="100" />
+        <Button text="Login"
+                onAction="#handleLogin"
+                maxWidth="200"
+                style="-fx-background-color: #b89b82; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6;"
+                prefHeight="40"/>
 
-    <HBox spacing="5" alignment="CENTER">
-        <Label text="Don't have an account?" />
-        <Button text="Sign Up" onAction="#openSignup" />
-    </HBox>
-
-</VBox>
+        <HBox spacing="5" alignment="CENTER">
+            <Label text="Don't have an account?" style="-fx-text-fill: #555555; -fx-font-size: 13px;" />
+            <Button text="Sign Up"
+                    onAction="#openSignup"
+                    style="-fx-background-color: transparent; -fx-text-fill: #a87c5c; -fx-underline: true; -fx-font-size: 13px;" />
+        </HBox>
+    </VBox>
+</AnchorPane>

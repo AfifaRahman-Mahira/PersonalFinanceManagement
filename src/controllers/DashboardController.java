@@ -80,7 +80,7 @@ public void loadBudgets() {
         budgetStmt.setInt(1, currentUserId);
         ResultSet budgetRs = budgetStmt.executeQuery();
 
-        // বাজেট লোড
+     
         while (budgetRs.next()) {
             String cat = budgetRs.getString("category");
             double limit = budgetRs.getDouble("monthly_limit");
@@ -93,7 +93,7 @@ public void loadBudgets() {
             }
         }
 
-        // খরচ লোড
+      
         String expenseQuery = "SELECT category, SUM(amount) as spent FROM transactions WHERE user_id = ? AND type = 'Expense' GROUP BY category";
         PreparedStatement expenseStmt = conn.prepareStatement(expenseQuery);
         expenseStmt.setInt(1, currentUserId);
@@ -110,10 +110,9 @@ public void loadBudgets() {
             }
         }
 
-        // মোট খরচ হিসাব (totalSpent)
+       
         totalSpent = foodSpent + transportSpent + shoppingSpent + otherSpent;
 
-        // লেবেল আপডেট
         totalBudgetLabel.setText("৳ " + String.format("%.2f", totalBudget));
         foodBudgetLabel.setText("৳ " + String.format("%.2f", foodBudget));
         transportBudgetLabel.setText("৳ " + String.format("%.2f", transportBudget));
@@ -311,8 +310,8 @@ public void loadBudgets() {
             Parent root = loader.load();
 
             SetBudgetController controller = loader.getController();
-            controller.setUserId(currentUserId); // ইউজার আইডি সেট করো
-            controller.setDashboardController(this);  // **এই লাইনটি খুব গুরুত্বপূর্ণ**
+            controller.setUserId(currentUserId); 
+            controller.setDashboardController(this);  
 
             Stage stage = new Stage();
             stage.setTitle("Set Budget");
@@ -320,7 +319,7 @@ public void loadBudgets() {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
 
-            // উইন্ডো বন্ধ হলে নিজেও আপডেট হতে পারো
+           
             loadBudgets();
             loadTransactions();
             calculateTotals();

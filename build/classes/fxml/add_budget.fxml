@@ -2,21 +2,37 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="controllers.AddBudgetController"
-      spacing="10" padding="20">
+      spacing="15" padding="20"
+      style="-fx-background-color: #f8f4f0;">
 
-    <Label text="Set Monthly Budget" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+    <Label text="Set Monthly Budget"
+           style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #333333;" />
 
-    <Label text="Category:"/>
-    <ComboBox fx:id="categoryComboBox" promptText="Select Category"/>
+    <Label text="Category:"
+           style="-fx-font-size: 14px; -fx-text-fill: #444444;" />
+    <ComboBox fx:id="categoryComboBox"
+              promptText="Select Category"
+              prefWidth="250"
+              style="-fx-background-radius: 6; -fx-font-size: 14px; -fx-text-fill: #333333;" />
 
-    <Label text="Monthly Limit:"/>
-    <TextField fx:id="limitField" promptText="Enter Monthly Limit"/>
+    <Label text="Monthly Limit:"
+           style="-fx-font-size: 14px; -fx-text-fill: #444444;" />
+    <TextField fx:id="limitField"
+               promptText="Enter Monthly Limit"
+               prefWidth="250"
+               style="-fx-background-radius: 6; -fx-font-size: 14px; -fx-text-fill: #333333; -fx-padding: 8;" />
 
-    <Button text="Save Budget" onAction="#handleSaveBudget"/>
+    <Button text="Save Budget"
+            onAction="#handleSaveBudget"
+            prefWidth="150"
+            style="-fx-background-color: #b89b82; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 10 0;" />
 
-    <Label fx:id="statusLabel" textFill="green"/>
+    <Label fx:id="statusLabel"
+           textFill="green"
+           style="-fx-font-size: 13px;" />
+
 </VBox>

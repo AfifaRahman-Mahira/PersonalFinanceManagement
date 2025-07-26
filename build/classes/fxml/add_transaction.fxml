@@ -7,36 +7,53 @@
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="controllers.AddTransactionController"
-      spacing="10">
+      spacing="15"
+      style="-fx-background-color: #f8f4f0;"
+      >
 
     <padding>
-        <Insets top="15" right="15" bottom="15" left="15"/>
+        <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <Label text="Add / Edit Transaction" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+    <Label text="Add / Edit Transaction" 
+           style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #333333;" />
 
-    <GridPane hgap="10" vgap="10">
-        <Label text="Title:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <TextField fx:id="titleField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+    <GridPane hgap="15" vgap="15">
+        <Label text="Title:" GridPane.rowIndex="0" GridPane.columnIndex="0"
+               style="-fx-text-fill: #333; -fx-font-size: 14px;" />
+        <TextField fx:id="titleField" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                   style="-fx-background-radius: 6; -fx-padding: 8; -fx-font-size: 14px; -fx-text-fill: #333;" />
 
-        <Label text="Category:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <TextField fx:id="categoryField" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+        <Label text="Category:" GridPane.rowIndex="1" GridPane.columnIndex="0"
+               style="-fx-text-fill: #333; -fx-font-size: 14px;" />
+        <TextField fx:id="categoryField" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                   style="-fx-background-radius: 6; -fx-padding: 8; -fx-font-size: 14px; -fx-text-fill: #333;" />
 
-        <Label text="Amount:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <TextField fx:id="amountField" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+        <Label text="Amount:" GridPane.rowIndex="2" GridPane.columnIndex="0"
+               style="-fx-text-fill: #333; -fx-font-size: 14px;" />
+        <TextField fx:id="amountField" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                   style="-fx-background-radius: 6; -fx-padding: 8; -fx-font-size: 14px; -fx-text-fill: #333;" />
 
-        <Label text="Type:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-        <HBox spacing="10" GridPane.rowIndex="3" GridPane.columnIndex="1">
-            <RadioButton fx:id="incomeRadio" text="Income" />
-            <RadioButton fx:id="expenseRadio" text="Expense" />
+        <Label text="Type:" GridPane.rowIndex="3" GridPane.columnIndex="0"
+               style="-fx-text-fill: #333; -fx-font-size: 14px;" />
+        <HBox spacing="15" GridPane.rowIndex="3" GridPane.columnIndex="1">
+            <RadioButton fx:id="incomeRadio" text="Income" style="-fx-text-fill: #333; -fx-font-size: 14px;" />
+            <RadioButton fx:id="expenseRadio" text="Expense" style="-fx-text-fill: #333; -fx-font-size: 14px;" />
         </HBox>
 
-        <Label text="Date:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-        <DatePicker fx:id="datePicker" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+        <Label text="Date:" GridPane.rowIndex="4" GridPane.columnIndex="0"
+               style="-fx-text-fill: #333; -fx-font-size: 14px;" />
+        <DatePicker fx:id="datePicker" GridPane.rowIndex="4" GridPane.columnIndex="1"
+                    style="-fx-background-radius: 6;" />
 
-        <Label text="Note:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-        <TextField fx:id="noteField" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+        <Label text="Note:" GridPane.rowIndex="5" GridPane.columnIndex="0"
+               style="-fx-text-fill: #333; -fx-font-size: 14px;" />
+        <TextField fx:id="noteField" GridPane.rowIndex="5" GridPane.columnIndex="1"
+                   style="-fx-background-radius: 6; -fx-padding: 8; -fx-font-size: 14px; -fx-text-fill: #333;" />
     </GridPane>
 
-    <Button text="Save" onAction="#saveTransaction" maxWidth="Infinity" />
+    <Button text="Save" onAction="#saveTransaction"
+            maxWidth="Infinity"
+            style="-fx-background-color: #b89b82; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 10 0;" />
+
 </VBox>
